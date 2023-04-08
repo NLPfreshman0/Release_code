@@ -158,10 +158,14 @@ class Model(nn.Module):
                 
             if self.args.train_mode == 'TE':
                 labels = inputs['label']
-                con_embedding = self.bert(inputs['text']['con_text']['input_ids'].squeeze(1), inputs['text']['con_text']['attention_mask'])
-                PH_output = con_embedding["last_hidden_state"]
+                if self.args.only_hy:
+                    hy_embedding = self.bert(inputs['text']['hypothesis']['input_ids'].squeeze(1), inputs['text']['hypothesis']['attention_mask'])
+                    output = hy_embedding["last_hidden_state"]
+                else:
+                    con_embedding = self.bert(inputs['text']['con_text']['input_ids'].squeeze(1), inputs['text']['con_text']['attention_mask'])
+                    output = con_embedding["last_hidden_state"]
                 if self.args.pool_type == 'cls':
-                    emb = PH_output[:, 0, :]
+                    emb = output[:, 0, :]
                     
             elif self.args.train_mode == 'VE':
                 labels = inputs['label']
