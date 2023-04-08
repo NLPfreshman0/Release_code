@@ -3,7 +3,7 @@ import argparse
 
 def parse_args():
     
-    parser = argparse.ArgumentParser(description="simcse")
+    parser = argparse.ArgumentParser(description="DBDRF")
     parser.add_argument("--seed", type=int, default=2023, help="random seed.")
     parser.add_argument('--dropout', type=float, default=0.1, help='dropout ratio')
     parser.add_argument("--task_name", type=str, default='SNLI', help="task name")
@@ -27,8 +27,8 @@ def parse_args():
     parser.add_argument('--num_workers', default=14, type=int, help="num_workers for dataloaders")
 
     # ======================== SavedModel Configs =========================
-    parser.add_argument('--savedmodel_path', type=str, default='/data/zhangdacao/save/snli_baseline/bert-base-uncased')
-    parser.add_argument('--ckpt_file', type=str, default='/data/zhangdacao/save/baseline/bert-base-uncased/model.bin')
+    parser.add_argument('--savedmodel_path', type=str, default='')
+    parser.add_argument('--ckpt_file', type=str, default='')
     parser.add_argument('--best_score', default=0.8, type=float, help='save checkpoint if mean_f1 > best_score')
 
     # ========================= Learning Configs ==========================
@@ -42,6 +42,6 @@ def parse_args():
     parser.add_argument("--adam_epsilon", default=1e-6, type=float, help="Epsilon for Adam optimizer.")
 
     # ========================== Title BERT =============================
-    parser.add_argument('--bert_dir', type=str, default='/data/zhangdacao/opensource-model/bert-base-uncased')
+    parser.add_argument('--bert_dir', type=str, default='opensource-model/bert-base-uncased')
     parser.add_argument('--bert_seq_length', type=int, default=128)
     return parser.parse_args()
