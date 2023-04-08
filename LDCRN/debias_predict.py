@@ -31,8 +31,7 @@ onlyhy_confactual_hard_dataloader, _ = create_MultiNLI_hard_dataloaders(args, co
 factual_hard_dataloader, _ = create_MultiNLI_hard_dataloaders(args)
 match_hard, mismatch_hard = create_MultiNLI_hard_dataloaders(args)
 
-model_path = "/data/zhangdacao/save/confactual_multinli_baseline/bert-base-uncased_pair_use_mean_and_label/model.bin"
-#model_path = "/data/zhangdacao/save/confactual_multinli_baseline/roberta-base_pair_use_mean_and_label/ model.bin"
+model_path = args.ckpt_file
 model = Model(args)
 
 model.load_state_dict(torch.load(model_path, map_location='cpu'))
@@ -43,7 +42,7 @@ if args.device == 'cuda':
 model.eval()
 
 
-def confactual_prediction(dataloader, a):
+def confactual_prediction(dataloader, a=0.3):
     overall = [0, 0, 0]
     per_class = [0, 0, 0]
     preds = []
@@ -71,26 +70,17 @@ def confactual_prediction(dataloader, a):
         print('overall_accuracy:', accuracy)
         print('e_accuracy:', e_accuracy, 'n_accuracy:', n_accuracy, 'c_accuracy:', c_accuracy)
     return accuracy
-#confactual_prediction(val_dataloader, 1)
-#confactual_prediction(test_dataloader, 1)
 
-def grid_search(val_dataloader):
-    grid_map = {}
-    best_x, best_acc = 0, 0
-    for i in np.arange(-2, 2.1, 0.1):
-        print(i)
-        cur_acc = confactual_prediction(val_dataloader, i)
-        grid_map[str(i)] = cur_acc
-        if cur_acc > best_acc:
-            best_acc = cur_acc
-            best_x = i
-    print(best_x, best_acc)
-    np.save('data/snli_confactual_hard_grid_map.npy', grid_map)
-    return best_x, best_acc
-
-confactual_prediction(val_dataloader, 0.2)
-confactual_prediction(test_dataloader, 0.2)
-#confactual_prediction(hard_dataloader, 0.2)
-confactual_prediction(match_hard, 0.2)
-confactual_prediction(mismatch_hard, 0.2)
+print('val')
+confactual_prediction(val_dataloader)
+print('test')
+confactual_prediction(test_dataloader)
+if args.task_name == 'SNLI':
+    print('snli_hard')
+    confactual_prediction(hard_dataloader)
+else:
+    print('matched_hard')
+    confactual_prediction(match_hard)
+    print('mismatched_hard')
+    confactual_prediction(mismatch_hard)
     
