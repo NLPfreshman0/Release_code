@@ -82,9 +82,6 @@ class Model(nn.Module):
                     VH_emb = VH_output[:, 0, :]
                     PH_emb = PH_output[:, 0, :]
                     H_emb = H_output[:, 0, :]
-                #elif self.args.pool_type == 'mean':
-                    #emb = (output * combine_attention_mask.squeeze(1).unsqueeze(-1)).sum(1) / combine_attention_mask.squeeze(1).sum(-1).unsqueeze(-1)
-                #emb = torch.concat([image_embedding, text_embedding, torch.abs(image_embedding-text_embedding), image_embedding*text_embedding], dim=1)
                 if self.args.fusion == 'CON':
                     fusion_emb = torch.cat([VH_emb, PH_emb, H_emb], dim=1)
                 else:
@@ -150,7 +147,6 @@ class Model(nn.Module):
                     return logits, con_logits, torch.argmax(logits, dim=1), labels
                     
                 if self.args.use_CL:
-                    #method1
                     premise_emb = self.bert(inputs['text']['premise']['input_ids'].squeeze(1), inputs['text']['premise']['attention_mask'].squeeze(1))
                     premise_cls = premise_emb["last_hidden_state"][:, 0, :]
                     image_emb = self.bert(inputs_embeds=inputs['image'], attention_mask=torch.ones(cls_embedding.shape[0], 50).cuda())
@@ -211,9 +207,6 @@ class Model(nn.Module):
                 if self.args.pool_type == 'cls':
                     VH_emb = VH_output[:, 0, :]
                     PH_emb = PH_output[:, 0, :]
-                #elif self.args.pool_type == 'mean':
-                    #emb = (output * combine_attention_mask.squeeze(1).unsqueeze(-1)).sum(1) / combine_attention_mask.squeeze(1).sum(-1).unsqueeze(-1)
-                #emb = torch.concat([image_embedding, text_embedding, torch.abs(image_embedding-text_embedding), image_embedding*text_embedding], dim=1)
                 if self.args.fusion == 'CON':
                     emb = torch.cat([VH_emb, PH_emb], dim=1)
                 else:
@@ -226,28 +219,15 @@ class Model(nn.Module):
             if inference:
                 return logits, torch.argmax(logits, dim=1), labels
             if self.args.use_CL:
-                #method2
-                image_emb = torch.mean(VH_output[:, 1:51, :], dim=1)
-                premise_mask = inputs['text']['premise']['attention_mask'].squeeze(1)[:, 1:]
-                premise_emb = (PH_output[:, 1:, :] * premise_mask.squeeze(1).unsqueeze(-1)).sum(1) / premise_mask.squeeze(1).sum(-1).unsqueeze(-1)
-                CL_loss = self.calc_itc_loss(premise_emb, image_emb)
+                premise_emb = self.bert(inputs['text']['premise']['input_ids'].squeeze(1), inputs['text']['premise']['attention_mask'].squeeze(1))
+                premise_cls = premise_emb["last_hidden_state"][:, 0, :]
+                image_emb = self.bert(inputs_embeds=inputs['image'], attention_mask=torch.ones(cls_embedding.shape[0], 50).cuda())
+                image_cls = image_emb["last_hidden_state"][:, 0, :]
+                CL_loss = self.calc_itc_loss(premise_cls, image_cls)
                 return self.calc_loss(logits, labels) + CL_loss
             else:
                 return self.calc_loss(logits, labels)
                 
-        if not inference and (self.args.only_pre or self.args.only_hy):
-                labels = inputs['label']
-                if self.args.task_name == 'SNLI-VE' and self.args.only_pre:
-                    image_embedding = inputs['image']
-                    image_embedding = self.dense(image_embedding).reshape(image_embedding.shape[0], 1, -1)
-                    output = self.bert(inputs_embeds=image_embedding)["last_hidden_state"][:, 0, :]
-                    return output, labels
-                elif self.args.task_name == 'SNLI-VE' and self.args.only_hy:
-                    output = self.bert(inputs['text']['input_ids'].squeeze(1), inputs['text']['attention_mask'].squeeze(1))["last_hidden_state"][:, 0, :]
-                    return output, labels
-                else:
-                    output = self.bert(inputs['input_ids'].reshape(-1, inputs['input_ids'].shape[-1]), inputs['attention_mask'].reshape(-1, inputs['attention_mask'].shape[-1]))
-                    return output.last_hidden_state[:, 0, :], labels
     
     def calc_loss(self, logits, labels):
         loss = F.cross_entropy(logits, labels)
