@@ -14,7 +14,7 @@ from transformers import (
     TFAutoModel
 )
 
-NEW_DIR = "/data/zhangdacao/opensource-model/"
+NEW_DIR = "opensource-model/"
 print('Transformers version',transformers.__version__) 
 
 def transformers_model_dowloader(pretrained_model_name_list = ['bert-base-uncased'], is_tf = True, model_class=AutoModelForPreTraining):
