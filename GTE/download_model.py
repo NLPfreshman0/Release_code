@@ -33,6 +33,6 @@ def transformers_model_dowloader(pretrained_model_name_list = ['bert-base-uncase
 
 pathlib.Path(NEW_DIR).mkdir(parents=True, exist_ok=True)
 
-pretrained_model_name_list = ['princeton-nlp/unsup-simcse-bert-base-uncased', 'princeton-nlp/unsup-simcse-roberta-base']
+pretrained_model_name_list = ['bert-base-uncased', 'roberta-base']
 transformers_model_dowloader(pretrained_model_name_list, is_tf = False)
 print("Download finish")
