@@ -13,8 +13,8 @@ stop_words = set(stopwords.words('english'))
 
 top_K = 50
 use_stop_words = True
-full_datasets = np.load('/data/zhangdacao/dataset/multi_nli/validation_matched.npy', allow_pickle='TRUE')
-hard_datasets = np.load('/data/zhangdacao/dataset/multi_nli/matched_hard.npy', allow_pickle='TRUE')
+full_datasets = np.load('dataset/multi_nli/validation_matched.npy', allow_pickle='TRUE')
+hard_datasets = np.load('dataset/multi_nli/matched_hard.npy', allow_pickle='TRUE')
     
 # 定义一个默认字典，用于统计词语的词频
 full_pre_word_counts_e = defaultdict(int)
