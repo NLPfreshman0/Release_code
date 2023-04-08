@@ -1,7 +1,7 @@
-# 论文标题：针对情境感知的自然语言推理任务的因果去偏方法研究
+# 论文标题：Label-aware Debiased Causal Reasoning for Natural Language Inference
 ## 1 预训练模型与数据处理
 ### 1.1 数据集下载
-使用download_model.py下载预训练模型BERT和RoBERTa,从官网上下载SNLI-VE数据集和Flickr30k数据集
+使用download_model.py下载预训练模型BERT和RoBERTa,使用Huggingface下载SNLI数据集和MultiNLI数据集
 ```
 SNLI-VE:https://github.com/necla-ml/SNLI-VE
 Flickr30k:http://shannon.cs.illinois.edu/DenotationGraph/
