@@ -1,1 +1,2 @@
-
+SNLI_PMI_without_stopwords.csv 基于PMI计算的SNLI数据集Top50词
+MultiNLI_PMI_without_stopwords.csv 基于PMI计算的MultiNLI数据集Top50词
