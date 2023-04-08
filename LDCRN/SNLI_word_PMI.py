@@ -12,8 +12,8 @@ stop_words = set(stopwords.words('english'))
 
 top_K = 50
 use_stop_words = True
-full_datasets = np.load('/data/zhangdacao/dataset/snli/test.npy', allow_pickle='TRUE')
-hard_datasets = open('/data/zhangdacao/dataset/snli/test_hard.jsonl', 'r+', encoding='utf-8')
+full_datasets = np.load('dataset/snli/test.npy', allow_pickle='TRUE')
+hard_datasets = open('dataset/snli/test_hard.jsonl', 'r+', encoding='utf-8')
     
 full_pre_word_counts_e = defaultdict(int)
 full_pre_word_counts_n = defaultdict(int)
@@ -262,5 +262,5 @@ df['hard_pre_contradiction'] = hard_pre_c_sorted_words[:top_K]
 df['hard_hy_contradiction'] = hard_hy_c_sorted_words[:top_K]
 
 #df.to_csv('data/SNLI_word_counts_with_stopwords.csv', index=False)
-#df.to_csv('data/SNLI_PMI_without_stopwords.csv', index=False)
+df.to_csv('data/SNLI_PMI_without_stopwords.csv', index=False)
 
