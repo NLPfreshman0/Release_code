@@ -29,7 +29,7 @@ setup_seed(args)
 train_dataloader, val_dataloader, test_dataloader = create_dataloaders(args)
 hard_dataloader = create_hard_dataloaders(args)
 
-model_path = "/data/zhangdacao/save/snli_baseline/bert-base-uncased_pair/model.bin"
+model_path = "model.bin"
 
 tokenizer = AutoTokenizer.from_pretrained(args.bert_dir, use_fast=True)
 model = Model(args)
@@ -41,36 +41,21 @@ model.cuda()
 
 model.eval()
 
-
 def calc_mean_emb(dataloader):
     all_mean = torch.zeros(1, 768)
     all_num = 0
     en_num, ne_num, con_num = 0, 0, 0
-    """en_mean = torch.zeros(1, 768)
-    ne_mean = torch.zeros(1, 768)
-    con_mean = torch.zeros(1, 768)
-    en_num, ne_num, con_num = 0, 0, 0"""
     with torch.no_grad():
         loop = tqdm(dataloader, total = len(dataloader))
         for batch in loop:
             embs, labels = model(batch)
             all_mean += torch.sum(embs, dim=0).cpu()
             all_num += embs.shape[0]
-            """for i in range(embs.shape[0]):
-                if labels[i] == 0:
-                    en_num += 1
-                elif labels[i] == 1:
-                    ne_num += 1
-                else:
-                    con_num += 1"""
         all_mean /= all_num
     print(all_num, en_num, ne_num, con_num)
     np.save('data/multinli_all_mean.npy', all_mean)
-    #np.save('data/en_mean.npy', en_mean)
-    #np.save('data/ne_mean.npy', ne_mean)
-    #$np.save('data/con_mean.npy', con_mean)
 
-#calc_mean_emb(train_dataloader)
+calc_mean_emb(train_dataloader)
 
 def calc_topk_word_emb(task_name):
     if task_name == 'SNLI':
@@ -97,7 +82,7 @@ def calc_topk_word_emb(task_name):
         mean_emb /= num
         np.save('data/bert_' + task_name + '_' + name + '.npy', mean_emb)
 
-#calc_topk_word_emb('SNLI')
+calc_topk_word_emb('SNLI')
 calc_topk_word_emb('MultiNLI')
                 
         
