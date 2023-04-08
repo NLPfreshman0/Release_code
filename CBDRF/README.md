@@ -10,7 +10,7 @@ Flickr30k:http://shannon.cs.illinois.edu/DenotationGraph/
 下载完数据集之后，使用data_process.py对数据进行处理，基于SNLI-VE数据集生成GTE数据集train.npy,validation.npy,test.npy
 运行extract_images.py，使用CLIP模型的Visual部分对Flickr30k数据集的图片进行特征抽取,生成clip_image.npy
 ### 1.3 生成GTE-hard数据集
-首先使用BERT模型仅使用训练集中的假设据进行微调:
+首先使用BERT模型仅使用训练集中的假设句进行微调:
 ```
 python train.py --task_name 'GTE'
                 --train_mode 'TE'
