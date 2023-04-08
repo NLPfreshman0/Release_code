@@ -28,7 +28,7 @@ _, val_dataloader, test_dataloader = create_dataloaders(args)
 hard_dataloader = create_hard_dataloaders(args)
 GTE_hard = create_GTE_hard(args)
 
-model_path = "model.bin"
+model_path = args.ckpt_file
 model = Model(args)
 
 model.load_state_dict(torch.load(model_path, map_location='cpu'))
