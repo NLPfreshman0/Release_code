@@ -55,12 +55,16 @@ python train.py --task_name 'GTE'
 ```
 ## 3 测试
 ### 3.1 有偏预测
+```
 python test.py --bert_dir 'opensource-model/bert-base-uncased' 
                 --ckpt_flie 'save_path' 
                 --train_mode '' 
                 --fusion 'CON'(GTE需要)
+```
 ### 3.2 去偏预测（CBDRF）
+```
 python debias_predict.py --bert_dir 'opensource-model/bert-base-uncased' 
                          --ckpt_flie 'save_path' 
                          --confactual_train
                          --fusion 'CON'
+```
