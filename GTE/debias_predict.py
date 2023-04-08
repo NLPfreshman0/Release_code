@@ -38,7 +38,6 @@ if args.device == 'cuda':
 
 model.eval()
 
-
 def confactual_prediction(dataloader, a=1):
     overall = [0, 0, 0]
     per_class = [0, 0, 0]
@@ -70,9 +69,8 @@ def confactual_prediction(dataloader, a=1):
         print('e_accuracy:', e_accuracy, 'n_accuracy:', n_accuracy, 'c_accuracy:', c_accuracy)
     return accuracy
 
-
-confactual_prediction(val_dataloader, rate)
-confactual_prediction(test_dataloader, rate)
-onfactual_prediction(GTE_hard, rate)
+confactual_prediction(val_dataloader)
+confactual_prediction(test_dataloader)
+onfactual_prediction(GTE_hard)
 
     
