@@ -13,7 +13,7 @@ from transformers import (
     AutoModelForPreTraining,
     TFAutoModel
 )
-NEW_DIR = "/root/autodl-tmp/opensource-model/"
+NEW_DIR = "opensource-model/"
 print('Transformers version',transformers.__version__) 
 
 def transformers_model_dowloader(pretrained_model_name_list = ['bert-base-uncased'], is_tf = True, model_class=AutoModelForPreTraining):
@@ -32,6 +32,6 @@ def transformers_model_dowloader(pretrained_model_name_list = ['bert-base-uncase
 
 pathlib.Path(NEW_DIR).mkdir(parents=True, exist_ok=True)
 
-pretrained_model_name_list = ['princeton-nlp/unsup-simcse-bert-base-uncased', 'princeton-nlp/unsup-simcse-roberta-base']
+pretrained_model_name_list = ['bert-base-uncased', 'roberta-base']
 transformers_model_dowloader(pretrained_model_name_list, is_tf = False)
 print("Download finish")
