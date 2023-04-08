@@ -1,7 +1,7 @@
 import torch
 from config import parse_args
 from model import Model
-from load_datasets import create_dataloaders, create_hard_dataloaders, create_MultiNLI_hard_dataloaders,  create_snli_ve_hard_dataloaders, create_GTE_hard
+from load_datasets import create_dataloaders, create_GTE_hard
 import logging
 import os
 import time
@@ -58,24 +58,11 @@ if __name__ == '__main__':
     setup_device(args)
     setup_seed(args)
     train_dataloader, val_dataloader, test_dataloader = create_dataloaders(args, confactual=args.confactual)
-    hard_dataloader = create_hard_dataloaders(args, confactual=args.confactual)
-    matched_dataloader, mismatched_dataloader = create_MultiNLI_hard_dataloaders(args, confactual=args.confactual)
-    snli_ve_hard = create_snli_ve_hard_dataloaders(args, confactual=args.confactual)
     GTE_hard = create_GTE_hard(args)
     model = Model(args)
-    #print('train_dataset')
-    #test(args, model, train_dataloader)
     print('val_dataset')
     test(args, model, val_dataloader)
     print('test_dataset')
     test(args, model, test_dataloader)
     print('GTE_hard')
     test(args, model, GTE_hard)
-    #print('hard_dataset')
-    #test(args, model, hard_dataloader)
-    #print('matched_dataset')
-    #test(args, model, matched_dataloader)
-    #print('mismatched_dataset')
-    #test(args, model, mismatched_dataloader)
-    #print('snli_ve_hard')
-    #test(args, model, snli_ve_hard)
