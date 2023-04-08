@@ -17,21 +17,20 @@ class Datasets(Dataset):
         self.bert_seq_length = args.bert_seq_length
         self.pair = args.pair
         self.pattern = r"\b\w+\b"
-        self.mean_pre = np.load('data/all_mean.npy', allow_pickle=True).reshape(-1)
         if self.pair:
             self.bert_seq_length *= 2
         if self.task_name == 'SNLI':
-            self.data = np.load('/root/dataset/snli/'+split+'.npy', allow_pickle='TRUE')
+            self.data = np.load('dataset/snli/'+split+'.npy', allow_pickle='TRUE')
         elif self.task_name == 'SNLI-VE':
-            self.image = np.load('/root/dataset/snli_ve/image.npy', allow_pickle='TRUE').item()
-            self.data = np.load('/root/dataset/snli_ve/'+split+'.npy', allow_pickle='TRUE')
+            self.image = np.load('dataset/snli_ve/image.npy', allow_pickle='TRUE').item()
+            self.data = np.load('dataset/snli_ve/'+split+'.npy', allow_pickle='TRUE')
         elif self.task_name == 'MultiNLI':
             if split == 'train':
-                self.data = np.load('/root/dataset/multi_nli/train.npy', allow_pickle='TRUE')
+                self.data = np.load('dataset/multi_nli/train.npy', allow_pickle='TRUE')
             elif split == 'validation':
-                self.data = np.load('/root/dataset/multi_nli/validation_matched.npy', allow_pickle='TRUE')
+                self.data = np.load('dataset/multi_nli/validation_matched.npy', allow_pickle='TRUE')
             else:
-                self.data = np.load('/root/dataset/multi_nli/validation_mismatched.npy', allow_pickle='TRUE')
+                self.data = np.load('dataset/multi_nli/validation_mismatched.npy', allow_pickle='TRUE')
         self.tokenizer = AutoTokenizer.from_pretrained(args.bert_dir, use_fast=True)
             
     def __len__(self):
