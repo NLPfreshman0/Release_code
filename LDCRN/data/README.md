@@ -2,6 +2,18 @@ SNLI_PMI_without_stopwords.csv 基于PMI计算的SNLI数据集Top50词
 
 MultiNLI_PMI_without_stopwords.csv 基于PMI计算的MultiNLI数据集Top50词
 
-SNLI_PMI_without_stopwords.csv SNLI训练集中前提句的平均表征
+snli_all_mean.npy SNLI训练集中前提句的平均表征
 
-MultiNLI_PMI_without_stopwords.csv MultiNLI训练集中前提句的平均表征
+multinli_all_mean.npy MultiNLI训练集中前提句的平均表征
+
+bert_SNLI_entailment.npy SNLI蕴含类别top-K词平均表征
+
+bert_SNLI_neatural.npy SNLI中立类别top-K词平均表征
+
+bert_SNLI_contradiction.npy SNLI矛盾类别top-K词平均表征
+
+bert_MultiNLI_entailment.npy MultiNLI蕴含类别top-K词平均表征
+
+bert_MultiNLI_neatural.npy MultiNLI中立类别top-K词平均表征
+
+bert_MultiNLI_contradiction.npy MultiNLI矛盾类别top-K词平均表征
