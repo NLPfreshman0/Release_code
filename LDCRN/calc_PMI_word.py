@@ -7,16 +7,16 @@ import nltk
 from nltk.corpus import stopwords
 import pandas as pd
 
-#Í£ÓÃ´Ê
+#åœç”¨è¯
 #nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
 
 top_K = 50
 use_stop_words = True
-full_datasets = np.load('/data/zhangdacao/dataset/snli/test.npy', allow_pickle='TRUE')
-hard_datasets = open('/data/zhangdacao/dataset/snli/test_hard.jsonl', 'r+', encoding='utf-8')
+full_datasets = np.load('dataset/snli/test.npy', allow_pickle='TRUE')
+hard_datasets = open('dataset/snli/test_hard.jsonl', 'r+', encoding='utf-8')
     
-# ¶¨ÒåÒ»¸öÄ¬ÈÏ×Öµä£¬ÓÃÓÚÍ³¼Æ´ÊÓïµÄ´ÊÆµ
+# å®šä¹‰ä¸€ä¸ªé»˜è®¤å­—å…¸ï¼Œç”¨äºç»Ÿè®¡è¯è¯­çš„è¯é¢‘
 full_pre_word_counts_e = defaultdict(int)
 full_pre_word_counts_n = defaultdict(int)
 full_pre_word_counts_c = defaultdict(int)
@@ -191,7 +191,7 @@ for word in hard_hy_word_counts_c:
     PMI = np.log(p_word_class / (p_word * p_class))
     hard_pre_PMI_c[word] = PMI
 
-# °´×ÖµäµÄÖµÅÅĞò
+# æŒ‰å­—å…¸çš„å€¼æ’åº
 full_pre_e_sorted_words = sorted(full_pre_PMI_e.items(), key=lambda x: x[1], reverse=True)
 full_pre_n_sorted_words = sorted(full_pre_PMI_n.items(), key=lambda x: x[1], reverse=True)
 full_pre_c_sorted_words = sorted(full_pre_PMI_c.items(), key=lambda x: x[1], reverse=True)
@@ -207,7 +207,7 @@ hard_hy_n_sorted_words = sorted(hard_hy_PMI_n.items(), key=lambda x: x[1], rever
 hard_hy_c_sorted_words = sorted(hard_hy_PMI_c.items(), key=lambda x: x[1], reverse=True)
 
 
-# ´òÓ¡ÅÅĞòºóµÄ´ÊÓï
+# æ‰“å°æ’åºåçš„è¯è¯­
 print(full_pre_e_sorted_words[:top_K])
 print(full_pre_n_sorted_words[:top_K])
 print(full_pre_c_sorted_words[:top_K])
@@ -237,7 +237,7 @@ df['hard_hy_neutral'] = hard_hy_n_sorted_words[:top_K]
 df['hard_pre_contradiction'] = hard_pre_c_sorted_words[:top_K]
 df['hard_hy_contradiction'] = hard_hy_c_sorted_words[:top_K]
 
-# Ê¹ÓÃto_csvº¯Êı±£´æDataFrameµ½CSVÎÄ¼ş
+# ä½¿ç”¨to_csvå‡½æ•°ä¿å­˜DataFrameåˆ°CSVæ–‡ä»¶
 #df.to_csv('data/SNLI_word_counts_with_stopwords.csv', index=False)
 df.to_csv('data/SNLI_PMI_without_stopwords.csv', index=False)
 
