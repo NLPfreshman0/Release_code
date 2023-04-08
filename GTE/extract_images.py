@@ -9,7 +9,7 @@ import numpy as np
 
 class ImageDataset(Dataset):
     def __init__(self):
-        self.path = "/data/zhangdacao/dataset/Flickr30k/flickr30k-images"
+        self.path = "dataset/Flickr30k/flickr30k-images"
         self.files= os.listdir(self.path) 
         self.processor = AutoProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
@@ -42,4 +42,4 @@ with torch.no_grad():
         for i, e in zip(idx, emb):
             clip_image[i] = e
 
-np.save('/data/zhangdacao/dataset/GTE/clip_image.npy', clip_image)
+np.save('dataset/GTE/clip_image.npy', clip_image)
