@@ -11,7 +11,7 @@ for split in splits:
     for i in range(len(dataset[split])):
         if dataset[split][i]['label'] in [0, 1, 2]:
             data.append({'premise':dataset[split][i]['premise'], 'hypothesis':dataset[split][i]['hypothesis'], 'label':dataset[split][i]['label']})
-    np.save('/data/zhangdacao/dataset/multi_nli/'+split+'.npy', data)
+    np.save('dataset/multi_nli/'+split+'.npy', data)
     
 #process snli dataset
 dataset = load_dataset('snli')
@@ -21,4 +21,4 @@ for split in splits:
     for i in range(len(dataset[split])):
         if dataset[split][i]['label'] in [0, 1, 2]:
             data.append({'premise':dataset[split][i]['premise'], 'hypothesis':dataset[split][i]['hypothesis'], 'label':dataset[split][i]['label']})
-    np.save('/data/zhangdacao/dataset/snli/'+split+'.npy', data)
+    np.save('dataset/snli/'+split+'.npy', data)
