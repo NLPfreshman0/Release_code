@@ -12,7 +12,7 @@ glove预训练文件:https://nlp.stanford.edu/projects/glove/
 ```
     python challenging_test_generate.py
 ```
-#2. 模型训练
+# 2.模型训练
 ## 2.1 baselines
 ### 2.1.1 MACR模型
 ```
