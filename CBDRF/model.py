@@ -95,7 +95,7 @@ class Model(nn.Module):
                 VH_logits = self.VH_classifier(VH_emb)
                 VH_logits = F.softmax(VH_logits, dim=-1)
                 PH_logits = self.PH_classifier(PH_emb)
-                VH_logits = F.softmax(PH_logits, dim=-1)
+                PH_logits = F.softmax(PH_logits, dim=-1)
                 H_logits = self.H_classifier(H_emb)
                 H_logits = F.softmax(H_logits, dim=-1)
                 logits = self.main_classifier(fusion_emb)
