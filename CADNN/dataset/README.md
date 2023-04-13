@@ -1,1 +1,1 @@
-下载MIND数据集和glove word2vec文件
+downloda_dataset.py 下载MIND数据集和glove word2vec文件
